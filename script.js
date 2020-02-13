@@ -1,51 +1,51 @@
 var filters = {
-  all: function (todos) {
+  all: function(todos) {
     return todos;
   },
-  complete: function (todos) {
-    return todos.filter(function (todo) {
+  complete: function(todos) {
+    return todos.filter(function(todo) {
       return todo.complete;
     });
   },
-  incomplete: function (todos) {
-    return todos.filter(function (todo) {
+  incomplete: function(todos) {
+    return todos.filter(function(todo) {
       return !todo.complete;
     });
   }
-}
+};
 
-var STORAGE_KEY = 'vue-js-todo-P7oZi9sL'
+var STORAGE_KEY = "vue-js-todo-P7oZi9sL";
 var todoStorage = {
-  fetch: function () {
-    var todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  fetch: function() {
+    var todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
     return todos;
   },
-  save: function (todos) {
+  save: function(todos) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
   }
-}
+};
 
 var app = new Vue({
-  el: '#app',
+  el: "#app",
   data: {
-    inputVal: '',
+    inputVal: "",
     todos: todoStorage.fetch(),
-    visibility: 'all'
+    visibility: "all"
   },
   watch: {
     todos: {
-      handler: function (todos) {
+      handler: function(todos) {
         todoStorage.save(todos);
       }
     }
   },
   computed: {
-    filteredTodos: function () {
+    filteredTodos: function() {
       return filters[this.visibility](this.todos);
     }
   },
   methods: {
-    addTodo: function (e) {
+    addTodo: function(e) {
       e.preventDefault();
       if (this.inputVal) {
         this.todos.push({
@@ -53,15 +53,15 @@ var app = new Vue({
           complete: false
         });
       }
-      this.inputVal = '';
+      this.inputVal = "";
     },
-    toggleTodo: function (todo) {
+    toggleTodo: function(todo) {
       todo.complete = !todo.complete;
     },
-    filterTodos: function (filter) {
+    filterTodos: function(filter) {
       this.visibility = filter;
     },
-    deleteTodo: function (index) {
+    deleteTodo: function(index) {
       this.todos.splice(index, 1);
     }
   }
